@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Arnebr\Tibber\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class TibberCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-tibber';
 
     public $description = 'My command';
 

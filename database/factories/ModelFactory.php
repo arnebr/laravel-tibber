@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Database\Factories;
+namespace Arnebr\Tibber\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
