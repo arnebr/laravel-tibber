@@ -2,9 +2,9 @@
 
 namespace Arnebr\Tibber;
 
+use Arnebr\Tibber\Commands\TibberCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Arnebr\Tibber\Commands\TibberCommand;
 
 class TibberServiceProvider extends PackageServiceProvider
 {

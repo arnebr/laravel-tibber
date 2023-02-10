@@ -2,9 +2,9 @@
 
 namespace Arnebr\Tibber\Tests;
 
+use Arnebr\Tibber\TibberServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Arnebr\Tibber\TibberServiceProvider;
 
 class TestCase extends Orchestra
 {
