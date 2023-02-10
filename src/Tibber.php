@@ -2,34 +2,39 @@
 
 namespace Arnebr\Tibber;
 
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use PhpParser\Node\Expr\FuncCall;
 
 class Tibber
 {
     public const HOURLY = 'HOURLY';
+
     public const DAILY = 'DAILY';
+
     public const WEEKLY = 'WEEKLY';
+
     public const MONTHLY = 'MONTHLY';
+
     public const ANNUAL = 'ANNUAL';
 
-    public const APP_HOME='HOME';
-    public const APP_CONSUMPTION='CONSUMPTION';
-    public const APP_METER_READING='METER_READING';
-    public const APP_COMPARISON='COMPARISON';
+    public const APP_HOME = 'HOME';
+
+    public const APP_CONSUMPTION = 'CONSUMPTION';
+
+    public const APP_METER_READING = 'METER_READING';
+
+    public const APP_COMPARISON = 'COMPARISON';
 
     private function request($query): array
     {
-
         $client = Http::withHeaders([
             'Content-Type' => 'application/json',
         ])->withToken(config('tibber.token'))->post(config('tibber.api_url'), [
-            'query' => $query
+            'query' => $query,
         ]);
 
         return $client->json();
     }
+
     public function viewer($subquery = '')
     {
         $query = <<<GQL
@@ -43,11 +48,13 @@ class Tibber
             }
         }
         GQL;
+
         return $this->request($query);
     }
+
     public function homes($homeId = null, $subquery = '')
     {
-        $action = ($homeId === NULL) ? 'homes' : 'home(id:' . $homeId . ')';
+        $action = ($homeId === null) ? 'homes' : 'home(id:'.$homeId.')';
         $subquery = <<<GQL
                 $action {
                     $subquery
@@ -137,8 +144,10 @@ class Tibber
                       }
                   }
         GQL;
+
         return $this->viewer($subquery);
     }
+
     public function consumption($homeId = null, $resolution = Tibber::HOURLY, $last = 100)
     {
         $subquery = <<<GQL
@@ -154,9 +163,12 @@ class Tibber
               currency
             }
         GQL;
-        return $this->homes($homeId,$subquery);
+
+        return $this->homes($homeId, $subquery);
     }
-    public function sendPushNotification(string $title,string $message, $screenToOpen=Tibber::APP_HOME){
+
+    public function sendPushNotification(string $title, string $message, $screenToOpen = Tibber::APP_HOME)
+    {
         $subquery = <<<GQL
         mutation{
             sendPushNotification(input: {
@@ -170,6 +182,7 @@ class Tibber
           }
 
         GQL;
+
         return $this->request($subquery);
     }
 }
