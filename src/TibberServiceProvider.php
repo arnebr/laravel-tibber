@@ -3,6 +3,8 @@
 namespace Arnebr\Tibber;
 
 use Arnebr\Tibber\Commands\TibberCommand;
+use Illuminate\Notifications\ChannelManager;
+use Illuminate\Support\Facades\Notification;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -21,5 +23,11 @@ class TibberServiceProvider extends PackageServiceProvider
             //->hasViews()
             //->hasMigration('create_laravel-tibber_table')
             ->hasCommand(TibberCommand::class);
+
+        Notification::resolved(function (ChannelManager $service) {
+            $service->extend('tibber', function ($app) {
+                return new Channels\TibberChannel();
+            });
+        });
     }
 }
