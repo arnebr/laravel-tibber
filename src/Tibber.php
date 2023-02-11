@@ -151,6 +151,36 @@ class Tibber
         return $this->viewer($subquery);
     }
 
+    public function priceRating($homeId = null, $subquery = '')
+    {
+        $action = ($homeId === null) ? 'homes' : 'home(id:'.$homeId.')';
+        $subquery = <<<GQL
+                $action {
+                    $subquery
+                    id
+                    currentSubscription {
+                        status
+                        priceRating {
+                          hourly {
+                           entries{
+                            time
+                            total
+                            tax
+                            energy
+                            level
+                          }
+
+
+                          }
+                        }
+                      }
+
+                  }
+        GQL;
+
+        return $this->viewer($subquery);
+    }
+
     public function consumption($homeId = null, $resolution = Tibber::HOURLY, $last = 100)
     {
         $subquery = <<<GQL
