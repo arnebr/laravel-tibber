@@ -195,6 +195,7 @@ class Tibber
               consumptionUnit
               currency
             }
+        }
         GQL;
 
         return $this->homes($homeId, $subquery);
